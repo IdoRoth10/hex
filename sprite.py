@@ -32,3 +32,11 @@ class Sprite:
 
         self.image = pygame.transform.scale(self.image, (35, 35))
         screen.blit(self.image, (self.rect.x, self.rect.y))
+
+        def picture_turn(screen, count):
+            if count % 2 == 0:
+                self.image = pygame.image.load("media/blue.gif").convert_alpha()
+            else:
+                self.image = pygame.image.load("media/red.gif").convert_alpha()
+
+            screen.blit(self.image, (100, 22))
