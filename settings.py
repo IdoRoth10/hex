@@ -15,8 +15,16 @@ img_width = 35
 img_height = 35
 size = 11
 
+FPS = 30
+
 font = pygame.font.Font('freesansbold.ttf', 24)
 text = font.render('TURN OF:', True, (0, 0, 0))
 
 hexBoard = pygame.image.load('media/HexBoard.png')
 hexBoard = pygame.transform.scale(hexBoard, (width, height))
+blue = pygame.image.load('media/HexBoard.png')
+red_winner = pygame.image.load("media/red_winner.png")
+red_winner = pygame.transform.scale(red_winner, (360, 200))
+blue_winner = pygame.image.load("media/blue_winner.png")
+blue_winner = pygame.transform.scale(blue_winner, (360, 200))
+

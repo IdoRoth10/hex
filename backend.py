@@ -19,28 +19,6 @@ class Board:
     def set_value(self, i, j, num):
         self.board[i][j] = num
 
-    def get_neighbors(self, i, j):
-        neighbors_list = [(i - 1, j), (i - 1, j+1), (i, j - 1), (i, j + 1), (i + 1, j - 1), (i, j + 1)]
-        valid_neighbors_list = list()
-        for tup in neighbors_list:
-            if self.valid_index(tup[0], tup[1]):
-                valid_neighbors_list.append(tup)
-        return valid_neighbors_list
-
-    def valid_index(self, i, j):
-        if i >= self.n or j >= self.n or i<0 or j<0:
-            return False
-        else:
-            return True
-
-    def get_neighbors_same_color(self, i, j, player):
-        neighbors_list = self.get_neighbors(i, j)
-        color_neighbors = list()
-        for tup in neighbors_list:
-            if self.get_value(tup[0], tup[1]) == player:
-                color_neighbors.append(tup)
-        return color_neighbors
-
 
     def chekWin(self, player):
         if player == 1:
@@ -51,8 +29,11 @@ class Board:
             return is_win
 
         else:
-            # return self.checkWinP2(self.board, 0)
-            pass
+            is_win = False
+            for j in range(0, self.n):
+                if self.board[0][j] == 2:
+                    is_win = is_win or self.checkWinP2(0, j)
+            return is_win
 
 
     def checkWinP1(self, i, j):
@@ -72,10 +53,22 @@ class Board:
         self.board[i][j] = 1
         return result
 
+    def checkWinP2(self, i, j):
+        """
+                    p2 - red player
+                    from roe = 0 to row = self.n - 1
+                    -1 is a visited spot
+                """
+        if j >= self.n or j < 0 or i >= self.n or i < 0 or self.board[i][j] != 2:
+            return False
+        if i == self.n - 1:
+            return True
 
-    def chekWinP2(self, board, i):
-        pass
-
+        self.board[i][j] = -1
+        result = self.checkWinP2(i - 1, j) or self.checkWinP2(i - 1, j + 1) or self.checkWinP2(i, j - 1) or \
+                 self.checkWinP2(i, j + 1) or self.checkWinP2(i + 1, j - 1) or self.checkWinP2(i + 1, j)
+        self.board[i][j] = 2
+        return result
 
     def __repr__(self):
         s = ''
@@ -87,6 +80,9 @@ class Board:
         return s
 
 
+
+
 if __name__ == "__main__":
     b = Board()
+    b.chekWin(1)
     print(b)
